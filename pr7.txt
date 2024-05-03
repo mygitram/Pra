@@ -1,0 +1,48 @@
+import string
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+import string
+sent = "I am love . , NLP!"
+sent = sent.lower()
+text = ""
+for char in sent:
+    if char not in string.punctuation:
+        text = text+char
+
+stop_words = set(stopwords.words('english'))
+sentence = "This is a sample test showing words filteration!"
+word_tokens = word_tokenize(sentence)
+
+word_tokens
+
+filter_text=[]
+for w in word_tokens:
+    if w not in stop_words:
+        filter_text.append(w)
+filter_text
+
+from nltk.stem import PorterStemmer
+porter_stemmer = PorterStemmer()
+stemmed_words=[]
+for word in filter_text:
+    stemmed_words.append(porter_stemmer.stem(word))
+print("Original words:", filter_text)
+print("Stemmed words:", stemmed_words)
+
+# import these modules
+from nltk.stem import WordNetLemmatizer
+ 
+lemmatizer = WordNetLemmatizer()
+ 
+print(lemmatizer.lemmatize("rocks"))
+print(lemmatizer.lemmatize("corpora"))
+ 
+# a denotes adjective in "pos"
+print(lemmatizer.lemmatize("better", pos="a"))
+
+text = "The cat sat on the mat."
+tokenized_text = word_tokenize(text)
+# tags  = pos_tag(tokenized_text)

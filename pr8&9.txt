@@ -1,0 +1,73 @@
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df=pd.read_csv("Datasets/titanic.csv")
+df.head()
+
+df.info()
+df.describe()
+
+df.count()
+df.isnull().sum()
+
+df1=df.dropna()
+df1
+
+df1.isnull().sum()
+
+df1.columns
+
+df2=df1.drop(['Name', 'SibSp','Ticket','Pclass','PassengerId','Parch','Cabin','Embarked'], axis=1)
+
+df2
+
+sns.set_theme(style="ticks", color_codes=True)
+
+sns.countplot(x ='Sex', data = df2)
+ 
+# Show the plot
+plt.show()
+
+sns.countplot(x ='Survived', data = df2)
+
+# Show the plot
+plt.show()
+
+sns.displot(df2['Fare'],kde = False)
+plt.show()
+
+df2[['Fare','Survived']]
+
+df2.boxplot()
+
+sns.histplot(df2['Fare'],kde = False)
+plt.show()
+
+sns.set_style("whitegrid")
+
+sns.boxplot(x = 'Sex', y = 'Age', data = df2)
+
+# create another grouped boxplot 
+sns.boxplot(x = df2['Sex'],
+            y = df2['Age'],
+            hue = df2['Survived'],
+            palette = 'Set2')
+
+plt.figure(figsize=(10,6))
+sns.histplot(df['Fare'],bins=20,kde=True,color='blue')
+
+sns.pairplot(data=df,markers=["O"])
+
+
+
+
+
+
+
+
+
+
+
+
+

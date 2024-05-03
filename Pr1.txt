@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+from sklearn import preprocessing
+
+df = pd.read_csv('Datasets/iris.csv')
+print(df['Species'].unique())
+
+print(df)
+
+print(df.head(n=10))
+
+print(df.tail(n=5))
+
+df.index
+
+df.shape
+
+print(df.dtypes)
+
+df.columns.values
+
+
+df['Id']
+
+df.shape
+
+df.describe(include='all')
+# df.describe()
+
+df.sort_index(axis=1,ascending=False)
+df.iloc[5]
+df.isnull()
+df.isnull().head(n=100)
+df.isnull().any()
+df.isnull().sum().sum()
+df.isnull().sum(axis=1)
+df['Species'].unique()
+#Data normalization:
+x = dt[['Sepal_Length']].values.astype(float)
+min_max_scaler = preprocessing.MinMaxScaler()
+x_scaled = min_max_scaler.fit_transform(x)
+df_normalized = pd.DataFrame(x_scaled)
+print(df_normalized)

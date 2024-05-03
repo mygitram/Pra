@@ -1,0 +1,67 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df=pd.read_csv("Datasets/Iris.csv")
+df.tail()
+#df['Species'].unique()
+
+df.isnull().sum()
+
+df.dtypes
+
+df.info()
+
+df.describe()
+
+sns.catplot(x ="Species", hue ="SepalLengthCm",
+kind ="count", data = df)
+
+sns.histplot(data=df, x="Species")
+
+sns.histplot(data=df, x="SepalLengthCm")
+#Average sepallength lies between 5 -6
+df['SepalLengthCm'].mean()
+
+sns.histplot(data=df, x="PetalLengthCm")
+#Average sepalwidth lies between 4 -6
+df['PetalLengthCm'].mean()
+
+sns.histplot(data=df, x="SepalWidthCm")
+#Average sepalwidth lies between 2.5 -3.5
+df['SepalWidthCm'].mean()
+
+sns.histplot(data=df, x="PetalWidthCm")
+#Average petalwidth lies between 1 -2
+df['PetalWidthCm'].mean()
+
+sns.boxplot(x=df['SepalLengthCm'])
+#Median lies between 5.5 to 6
+
+Q1=df['SepalWidthCm'].quantile(0.25)
+Q3=df['SepalWidthCm'].quantile(0.75)
+Q1,Q3
+
+IQR=Q3-Q1
+
+lower_limit=Q1-1.5*IQR
+upper_limit=Q3+1.5*IQR
+
+df[(df['SepalWidthCm']<lower_limit)|(df['SepalWidthCm']>upper_limit)]
+df_without_outliers=df[(df['SepalWidthCm']>lower_limit)&(df['SepalWidthCm']<upper_limit)]
+df_without_outliers
+
+sns.boxplot(x=df_without_outliers['SepalWidthCm'])
+
+df.corr()
+
+features = df.iloc[:, 1:5]
+target = df.iloc[:, -1]
+
+target.head()
+
+
+print('The Initial DataFrame Contained %d Rows And %d Columns'%(df.shape))
+
+print('The Features Matrix Contains %d Rows And %d Columns'%(features.shape))

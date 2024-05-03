@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+df1 = pd.read_csv('Datasets/income.csv')
+df1.head()
+df1.age_group.unique()
+
+print(df1)
+
+df1.groupby(df1.age_group).count()
+
+df1.groupby(df1.age_group).min()
+
+df1.groupby(df1.age_group).max()
+
+df1.groupby(df1.age_group).mean()
+
+df1.groupby(df1.age_group).std()
+
+df1.groupby(df1.age_group).describe()
+
+from sklearn import datasets
+import pandas as pd
+data = datasets.load_iris()
+df = pd.DataFrame(data.data,columns=data.feature_names)
+df['species'] = pd.Series(data.target)
+df.head()
+
+df.species.unique()
+
+df.groupby(df.species)
+
+df.groupby(df.species).count()
+
+df.groupby(df.species).max()
+
+df.groupby(df.species).min()
+
+df.groupby(df.species).mean()
+
+df.groupby(df.species).std()
+
+df.groupby(df.species)["sepal length (cm)"].describe()
+
+df.groupby(df.species)["sepal width (cm)"].describe()

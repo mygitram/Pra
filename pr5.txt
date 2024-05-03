@@ -1,0 +1,50 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("Datasets/Social_Network_Ads.csv")
+df['Gender'].replace({"Male":0, "Female":1}, inplace = True)
+df
+
+df.columns
+
+X = df[['User ID', 'Gender', 'Age', 'EstimatedSalary']]
+Y = df[['Purchased']]
+
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.25,random_state=29)
+
+model = LogisticRegression()
+model.fit(X_train,Y_train)
+
+Y_pred = model.predict(X_test)
+
+Y_pred
+
+model.score(X_train,Y_train)
+model.score(X,Y)
+
+cm = confusion_matrix(Y_test, Y_pred)
+cm
+
+print(confusion_matrix.__doc__)
+
+tn, fp, fn, tp = confusion_matrix(Y_test, Y_pred).ravel()
+
+print(tn, fp, fn, tp)
+
+a = accuracy_score(Y_test, Y_pred)
+a
+
+precision_score(Y_test, Y_pred)
+
+recall_score(Y_test, Y_pred)
+
+plt.figure(figsize=(5,4))
+sns.heatmap(cm, annot=True)
+plt.title('Confusion Matrix')
+plt.ylabel('Actal Values')
+plt.xlabel('Predicted Values')
+plt.show()

@@ -1,0 +1,28 @@
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection  import train_test_split
+import pandas as pd
+import numpy as np
+sklearn.__all__
+df = pd.read_csv('Datasets/HousingData.csv')
+
+x = df[['LSTAT','RM']]
+y = df['MEDV']
+
+model = LinearRegression()
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2)
+
+df['CRIM'] = df['CRIM'].fillna(df['CRIM'].mean()) 
+df['INDUS'] = df['INDUS'].fillna(df['INDUS'].mean()) 
+df['CHAS'] = df['CHAS'].fillna(df['CHAS'].mean()) 
+df['AGE'] = df['AGE'].fillna(df['AGE'].mean()) 
+df['LSTAT'] = df['LSTAT'].fillna(df['LSTAT'].mean()) 
+df['ZN'] = df['ZN'].fillna(df['ZN'].mean())
+
+
+model.fit(x_train,y_train)
+y_pred = model.predict(x_test)
+pred = pd.DataFrame(data={'Actual':y_test,'Predicted':y_pred})
+
+pred
+
+

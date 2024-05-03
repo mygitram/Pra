@@ -1,0 +1,113 @@
+import pandas as pd
+import numpy as np
+dt = pd.read_csv('Datasets/StudentsPerformance.csv')
+print(dt)
+dt.isnull()
+
+dt.notnull()
+
+dt.isna().sum()
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+dt = pd.read_csv('Datasets/StudentsPerformance.csv')
+dt['Region'] = le.fit_transform(dt['Region'])
+newdf = dt 
+navalue= ['na','Na','NAN']
+dt = pd.read_csv('Datasets/StudentsPerformance.csv',na_values = navalue)
+dt['Math_Score'] = dt['Math_Score'].fillna(dt['Math_Score'].median())
+dt.dropna(how = 'all',axis=1)
+dt.dropna(how = 'any',axis=1)
+col = ["Math_Score","Reading_Score","Writing_Score","Placement_Score"]
+dt.boxplot(col)
+dt = pd.read_csv('Datasets/StudentsPerformance.csv',na_values = navalue)
+np.where(dt['Math_Score']>90)
+print(dt)
+
+np.where(dt['Math_Score']>70)
+# np.where(dt['Reading_Score']<25)
+# np.where(dt['Writing_Score']<30)
+
+import matplotlib.pyplot as plt
+fig,ax = plt.subplots(figsize=(18,10))
+print(dt['Placement_Score'])
+ax.scatter(dt['Placement_Score'],dt['Placement_offer_count'])
+plt.show()
+
+dt.dtypes
+
+dt.dtypes.value_counts()
+dt.select_dtypes(exclude=[object])
+
+dt.info()
+
+np.unique(dt['Placement_Score'])
+dt = dt.fillna(0)
+dt['Math_Score'] = dt['Math_Score'].astype('int64')
+
+dt['Math_Score'].replace('three',3,inplace=True)
+
+dt.isnull().sum()
+
+dt.info()
+
+sorted_rscore = sorted(dt['Reading_Score'])
+sorted_rscore
+q1 = np.percentile(sorted_rscore,25)
+q3 = np.percentile(sorted_rscore,75)
+IQR = q3-q1
+
+lwrBound = q1 - (0.5*IQR)
+upperBound = q3 + (0.5*IQR)
+
+outliers = []
+for i in dt['Reading_Score']:
+    if i<lwrBound or i>upperBound:
+        outliers.append(i)
+
+outl = np.where(dt['Reading_Score']<lwrBound )
+print(outliers)
+dt.iloc[outl] 
+# outl
+
+outliers = []
+for i in sorted_rscore:
+    if i<lwrBound or i>upperBound:
+        outliers.append(dt['Reading_Score'].index(i))
+outliers
+
+
+
+df.notnull()
+series1 = pd.notnull(df['Math_Score'])
+print(df[series1])
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['Gender'] = le.fit_transform(df['Gender'])
+newdf=df
+missing_values = ['Na','na']
+df = pd.read_csv('StudentsPerformance.csv')
+
+ndf  = df
+
+
+#using Boxplot for detecting outliers
+import numpy as np
+df = pd.read_csv('StudentsPerformance.csv')
+df.fillna(df.min(),inplace=True)
+col = ['Math_Score','Reading_Score','Writing_Score','Placement_Score']
+df.boxplot(col)
+
+
+# Detecting outliers using Scatterplot:
+import matplotlib.pyplot as plt  
+fig,ax = plt.subplots(figsize=(18,10))
+
+ax.scatter(df['Placement_Score'],df['Placement_offer_count'])
+ax.set_xlabel('Placement_Score')
+ax.set_ylabel('Placement_offer_count')
+plt.show()
+
+print(np.where((df['Placement_Score']<50) & (df['Placement_offer_count']>1)))
+print(np.where((df['Placement_Score']>85) & (df['Placement_offer_count']<3)))

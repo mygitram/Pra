@@ -1,0 +1,44 @@
+import nltk
+nltk.download('stopwords')
+# from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+sent = "I . ,love NLP ! We are using A Python"
+sent = sent.lower()
+
+import string
+punctuation = string.punctuation
+txt = ""
+for w in sent:
+    if w not in punctuation:
+        txt = txt+w
+sent = txt     
+tokens = word_tokenize(sent)
+txt
+
+stop_words = set(stopwords.words('english'))
+
+temp=[]
+for w in tokens:
+    if w not in stop_words:
+        temp.append(w)
+tokens = temp
+        
+tokens
+
+from nltk.stem import WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
+lemmatizer.lemmatize("rocks")
+# print(lemmatizer.lemmatize("better", pos="a"))
+
+from nltk.stem import PorterStemmer
+stemmer = PorterStemmer()
+stemmer.stem('Showing')
+from sklearn.feature_extraction.text import TfidfVectorizer
+corpus = ['quick brown fox jumps lazy dog', 'lazy dog likes sleep day', 'brown fox prefers eat cheese', 'red fox jumps brown fox', 'brown dog chases fox'
+         ]
+#preprocess the text
+vectorizer = TfidfVectorizer()
+vectorizer.fit(corpus)
+tf_idf_matrix = vectorizer.transform(corpus)
+# Print the resulting matrix
+print("TF-IDF Matrix:\n",tf_idf_matrix.toarray())

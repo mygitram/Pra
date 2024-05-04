@@ -51,31 +51,22 @@ dt.isnull().sum()
 
 dt.info()
 
-sorted_rscore = sorted(dt['Reading_Score'])
-sorted_rscore
-q1 = np.percentile(sorted_rscore,25)
-q3 = np.percentile(sorted_rscore,75)
-IQR = q3-q1
 
-lwrBound = q1 - (0.5*IQR)
-upperBound = q3 + (0.5*IQR)
+Q1 = np.quantile(df['Math_Score'],0.25)
+Q3 = np.quantile(df['Math_Score'],0.75)
+Q1,Q3
+IQR = Q3-Q1
+lwr = Q1-(1.5*IQR)
+upr = Q3+(1.5*IQR)
+lwr,upr
+df[(df['Math_Score']>upr)|(df['Math_Score']<lwr)]
 
-outliers = []
-for i in dt['Reading_Score']:
-    if i<lwrBound or i>upperBound:
-        outliers.append(i)
+df[(df['Math_Score']<upr)&(df['Math_Score']>lwr)]
 
-outl = np.where(dt['Reading_Score']<lwrBound )
-print(outliers)
-dt.iloc[outl] 
-# outl
+mean = df['Math_Score'].mean()
 
-outliers = []
-for i in sorted_rscore:
-    if i<lwrBound or i>upperBound:
-        outliers.append(dt['Reading_Score'].index(i))
-outliers
-
+df['Math_Score'] = np.where(df['Math_Score'] >upr, mean,df['Math_Score'])
+df
 
 
 df.notnull()
